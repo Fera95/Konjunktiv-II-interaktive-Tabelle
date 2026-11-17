@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Konjunktiv II – interaktive Tabelle</title>
+<style>
+:root{--bg:#f7f5fb;--surf:#fff;--ink:#241f33;--mute:#605a78;--line:#ded9ec;--acc:#6a3fc2;--onacc:#fff;--accbg:#ece6fa;--ok:#1a7f4b;--okbg:#e3f5ea;--bad:#b3261e;--badbg:#fbe7e5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15121d;--surf:#1e1a2b;--ink:#ece8f7;--mute:#aaa3c4;--line:#322c47;--acc:#b79cf5;--onacc:#150f26;--accbg:#2c2447;--ok:#5fd394;--okbg:#17342a;--bad:#f19990;--badbg:#3b1f1d}}
+:root[data-theme="dark"]{--bg:#15121d;--surf:#1e1a2b;--ink:#ece8f7;--mute:#aaa3c4;--line:#322c47;--acc:#b79cf5;--onacc:#150f26;--accbg:#2c2447;--ok:#5fd394;--okbg:#17342a;--bad:#f19990;--badbg:#3b1f1d}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:900px;margin:0 auto;padding:28px 18px 60px}
+h1{font-size:2rem;margin:0 0 4px}
+h2{font-size:1.25rem;margin:36px 0 10px}
+.sub{color:var(--mute);margin:0 0 22px;font-family:system-ui,sans-serif;font-size:.95rem}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surf)}
+table{border-collapse:collapse;width:100%;font-family:system-ui,sans-serif;font-size:.95rem}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--accbg);font-weight:600}
+tr:last-child td{border-bottom:0}
+tr.row{cursor:pointer}
+tr.row:hover td,tr.row:focus td{background:var(--accbg)}
+tr.row:focus{outline:2px solid var(--acc);outline-offset:-2px}
+.ex{display:none;color:var(--mute);margin-top:6px}
+tr.open .ex{display:block}
+tr.open td:first-child{border-left:4px solid var(--acc)}
+.hint,.note{font-size:.85rem;color:var(--mute);font-family:system-ui,sans-serif;margin:8px 0 0}
+.de{font-family:Georgia,serif;font-style:italic}
+button{font:inherit;font-family:system-ui,sans-serif;cursor:pointer}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.tab,.opt,.reset{padding:8px 14px;border:1px solid var(--line);background:var(--surf);color:var(--ink);border-radius:999px;font-size:.9rem}
+.opt{border-radius:8px}
+.tab[aria-selected="true"]{background:var(--acc);color:var(--onacc);border-color:var(--acc)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-family:system-ui,sans-serif}
+@media (max-width:560px){.cmp{grid-template-columns:1fr}}
+.cmp>div{padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surf)}
+.cmp small{display:block;color:var(--mute);margin-bottom:4px}
+.cmp .p{background:var(--accbg);border-color:var(--acc)}
+.cmp .de{font-size:1.05rem}
+.steps{display:grid;gap:8px;font-family:system-ui,sans-serif}
+.step{text-align:left;padding:12px 14px;border:1px solid var(--line);background:var(--surf);color:var(--ink);border-radius:10px;width:100%}
+.step span{display:none;margin-top:6px;color:var(--mute)}
+.step.open{background:var(--accbg);border-color:var(--acc)}
+.step.open span{display:block}
+.q{background:var(--surf);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px;font-family:system-ui,sans-serif}
+.q p{margin:0 0 10px}
+.opts{display:flex;gap:8px;flex-wrap:wrap}
+.opt.ok{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
+.opt.bad{background:var(--badbg);border-color:var(--bad);color:var(--bad)}
+.fb{margin:10px 0 0;font-size:.9rem;color:var(--mute);min-height:1.2em}
+.score{font-family:system-ui,sans-serif;font-weight:600;margin:6px 0 10px}
+</style>
+</head>
+<body>
+<main>
+<h1>Konjunktiv II</h1>
+<p class="sub">Irreales, Wünsche, höfliche Bitten – klicke auf eine Zeile, um ein Beispiel zu sehen.</p>
+
+<div class="tw"><table>
+<thead><tr><th>Thema</th><th>Erklärung</th></tr></thead>
+<tbody id="main"></tbody>
+</table></div>
+<p class="hint">Tipp: Mit Tab und Enter kannst du die Zeilen auch per Tastatur öffnen.</p>
+
+<h2>Bildung im Überblick</h2>
+<div class="tw"><table>
+<thead><tr><th>Form</th><th>Bildung</th><th>Beispiel</th></tr></thead>
+<tbody>
+<tr><td><b>Gegenwart (stark)</b></td><td>Präteritumstamm + Umlaut + Endung -e, -est, -e, -en, -et, -en</td><td class="de">kam → käme, ging → ginge</td></tr>
+<tr><td><b>Gegenwart (schwach)</b></td><td>wie Präteritum, deshalb: würde + Infinitiv</td><td class="de">machte → würde machen</td></tr>
+<tr><td><b>Hilfs- und Modalverben</b></td><td>eigene Formen, kein würde</td><td class="de">wäre, hätte, könnte, müsste</td></tr>
+<tr><td><b>Vergangenheit</b></td><td>hätte / wäre + Partizip II</td><td class="de">hätte gemacht, wäre gekommen</td></tr>
+<tr><td><b>Modal, Vergangenheit</b></td><td>hätte + Infinitiv + Modalverb im Infinitiv</td><td class="de">Ich hätte kommen können.</td></tr>
+</tbody></table></div>
+
+<h2>Konjugation: Präteritum und Konjunktiv II</h2>
+<div class="tabs" role="tablist" id="ktabs"></div>
+<div class="tw"><table><thead><tr><th></th><th>Präteritum (Indikativ)</th><th>Konjunktiv II</th></tr></thead><tbody id="kb"></tbody></table></div>
+<p class="note" id="knote"></p>
+
+<h2>Modalverben im Konjunktiv II</h2>
+<div class="tw"><table>
+<thead><tr><th>Infinitiv</th><th>Präteritum</th><th>Konjunktiv II</th><th>Beispiel</th></tr></thead>
+<tbody>
+<tr><td>können</td><td>konnte</td><td><b>könnte</b></td><td class="de">Könntest du mir helfen?</td></tr>
+<tr><td>müssen</td><td>musste</td><td><b>müsste</b></td><td class="de">Du müsstest mehr lernen.</td></tr>
+<tr><td>dürfen</td><td>durfte</td><td><b>dürfte</b></td><td class="de">Dürfte ich fragen?</td></tr>
+<tr><td>sollen</td><td>sollte</td><td><b>sollte</b></td><td class="de">Du solltest früher schlafen.</td></tr>
+<tr><td>wollen</td><td>wollte</td><td><b>wollte</b></td><td class="de">Ich wollte, ich wäre dort.</td></tr>
+<tr><td>mögen</td><td>mochte</td><td><b>möchte</b></td><td class="de">Ich möchte einen Kaffee.</td></tr>
+</tbody></table></div>
+<p class="note">Bei sollen und wollen ist der Konjunktiv II gleich dem Präteritum.</p>
+
+<h2>Verwendung</h2>
+<div class="tabs" role="tablist" id="vtabs"></div>
+<div class="tw"><table><thead><tr><th>Beispiel</th><th>Hinweis</th></tr></thead><tbody id="vb"></tbody></table></div>
+
+<h2>Real oder irreal? Vergleiche die Sätze</h2>
+<div class="tabs" role="tablist" id="ctabs"></div>
+<div class="cmp" id="cmp"></div>
+
+<h2>Irreale Bedingungssätze bilden</h2>
+<div class="steps" id="steps"></div>
+
+<h2>Lückenübung: Form einsetzen</h2>
+<p class="hint" style="margin:0 0 10px">Setze die richtige Konjunktiv-II-Form ein (Enter oder Prüfen). ä, ö, ü kannst du auch als ae, oe, ue schreiben.</p>
+<div id="wr"></div>
+
+<h2>Multiple-Choice-Übung (20 Fragen)</h2>
+<div class="score" id="score">Punkte: 0 / 0</div>
+<div id="quiz"></div>
+<button class="reset" id="reset" type="button">Neu starten</button>
+</main>
+
+<script>
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function tabs(box,names,cb){names.forEach(function(n,i){var b=el('button','tab',n);b.type='button';b.setAttribute('role','tab');b.addEventListener('click',function(){Array.prototype.forEach.call(box.children,function(c,j){c.setAttribute('aria-selected',j===i)});cb(i)});box.appendChild(b)});box.firstChild.click()}
+function fill(tb,rows,de){tb.innerHTML='';rows.forEach(function(r){var tr=el('tr');r.forEach(function(c,i){tr.appendChild(el('td',i>0&&de?'de':'',c))});tb.appendChild(tr)})}
+
+var rows=[
+["Funktion","Konjunktiv II drückt Irreales aus: Wünsche, Bedingungen, höfliche Bitten, Ratschläge, Vermutungen","Wenn ich Zeit hätte, käme ich."],
+["Gegenwart","Präteritumstamm + Umlaut + -e (starke Verben)","kommen → käme, gehen → ginge, fliegen → flöge"],
+["würde-Form","würde + Infinitiv; Pflicht bei schwachen Verben, in der Umgangssprache auch sonst üblich","Ich würde gern reisen. Er würde kommen."],
+["Hilfsverben","sein, haben und werden haben eigene Formen","Ich wäre da. Wir hätten Zeit. Er würde warten."],
+["Modalverben","Eigene Formen mit Umlaut (außer sollen und wollen)","Ich könnte, du müsstest, er dürfte, ich möchte."],
+["Vergangenheit","hätte oder wäre + Partizip II","Er hätte das gewusst. Wir wären gefahren."],
+["Modal, Vergangenheit","hätte + Infinitiv + Modalverb (zwei Infinitive am Ende)","Ich hätte kommen können."],
+["Irreale Bedingung","wenn-Satz im Konjunktiv II + Hauptsatz im Konjunktiv II","Wenn ich reich wäre, würde ich reisen."],
+["Ohne wenn","Das Verb steht an erster Stelle","Wäre ich reich, würde ich reisen."],
+["Wunschsatz","Wenn … doch … ! oder Verb an erster Stelle + doch","Wenn ich doch Zeit hätte! Hätte ich doch Zeit!"],
+["Höfliche Bitte","Konjunktiv II macht die Bitte freundlicher","Könnten Sie mir helfen? Würden Sie bitte warten?"],
+["Ratschlag","sollte oder an deiner Stelle würde ich","Du solltest mehr schlafen. An deiner Stelle würde ich gehen."],
+["als ob / als wenn","Vergleich mit etwas Irrealem; nach als steht das Verb an zweiter Stelle","Er tut so, als ob er alles wüsste. Er tut so, als wäre er krank."],
+["Indirekte Rede","Ersatz für Konjunktiv I, wenn dieser wie der Indikativ aussieht","Sie sagen, sie hätten Zeit."],
+["Typischer Fehler","Nach wenn steht kein würde (nicht in der Bedingung)","Falsch: Wenn ich würde Zeit haben. Richtig: Wenn ich Zeit hätte."]
+];
+var tb=document.getElementById('main');
+rows.forEach(function(r){
+ var tr=el('tr','row');tr.tabIndex=0;
+ var td1=el('td');td1.appendChild(el('b','',r[0]));
+ var td2=el('td','',r[1]);td2.appendChild(el('div','ex de',r[2]));
+ tr.appendChild(td1);tr.appendChild(td2);
+ function t(){tr.classList.toggle('open')}
+ tr.addEventListener('click',t);
+ tr.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();t()}});
+ tb.appendChild(tr);
+});
+
+var P=["ich","du","er/sie/es","wir","ihr","sie/Sie"];
+var kv=[
+["sein",["war","warst","war","waren","wart","waren"],["wäre","wärst","wäre","wären","wärt","wären"],"sein hat eigene Formen: wäre."],
+["haben",["hatte","hattest","hatte","hatten","hattet","hatten"],["hätte","hättest","hätte","hätten","hättet","hätten"],"haben → hätte (mit Umlaut)."],
+["werden",["wurde","wurdest","wurde","wurden","wurdet","wurden"],["würde","würdest","würde","würden","würdet","würden"],"würde ist auch das Hilfsverb der würde-Form."],
+["können",["konnte","konntest","konnte","konnten","konntet","konnten"],["könnte","könntest","könnte","könnten","könntet","könnten"],"Umlaut: können → könnte."],
+["müssen",["musste","musstest","musste","mussten","musstet","mussten"],["müsste","müsstest","müsste","müssten","müsstet","müssten"],"Umlaut: müssen → müsste."],
+["kommen",["kam","kamst","kam","kamen","kamt","kamen"],["käme","kämest","käme","kämen","kämet","kämen"],"Starkes Verb: Präteritumstamm + Umlaut + -e. Im Alltag oft: würde kommen."],
+["gehen",["ging","gingst","ging","gingen","gingt","gingen"],["ginge","gingest","ginge","gingen","ginget","gingen"],"Ohne Umlaut (kein a, o, u im Stamm). Im Alltag oft: würde gehen."],
+["machen",["machte","machtest","machte","machten","machtet","machten"],["würde machen","würdest machen","würde machen","würden machen","würdet machen","würden machen"],"Schwaches Verb: machte wäre wie der Indikativ, deshalb würde + Infinitiv."]
+];
+var kb=document.getElementById('kb');
+tabs(document.getElementById('ktabs'),kv.map(function(k){return k[0]}),function(i){
+ var k=kv[i];fill(kb,P.map(function(p,j){return [p,k[1][j],k[2][j]]}),false);
+ Array.prototype.forEach.call(kb.rows,function(r){r.cells[2].className='de';r.cells[2].style.fontWeight='600'});
+ document.getElementById('knote').textContent=k[3];
+});
+
+var vv=[
+["Irreal (Gegenwart)",[["Wenn ich reich wäre, würde ich reisen.","Bedingung, die jetzt nicht erfüllt ist"],["Wenn er mehr Zeit hätte, käme er mit.","Ohne Zeit: nicht real"],["Wäre ich du, würde ich ihn anrufen.","Ohne wenn: Verb an erster Stelle"]]],
+["Irreal (Vergangenheit)",[["Wenn ich es gewusst hätte, wäre ich gekommen.","Vergangenes, das nicht passiert ist"],["Hätte er gelernt, hätte er bestanden.","Ohne wenn"],["Wir hätten gewonnen, wenn wir besser gespielt hätten.","wenn-Satz am Ende"]]],
+["Wunsch",[["Wenn ich doch fliegen könnte!","Wunsch, der unerfüllbar ist"],["Hätte ich doch mehr Zeit!","Verb an erster Stelle + doch"],["Ich wollte, es wäre Sommer.","Wunsch im Nebensatz"]]],
+["Höfliche Bitte",[["Könnten Sie mir bitte helfen?","höflicher als: Können Sie …?"],["Würden Sie das Fenster schließen?","würde + Infinitiv"],["Dürfte ich Sie etwas fragen?","sehr höflich"]]],
+["Ratschlag",[["Du solltest mehr schlafen.","sollte + Infinitiv"],["An deiner Stelle würde ich ihn anrufen.","an deiner Stelle + würde"],["Du müsstest mal zum Arzt gehen.","müsste: dringender Rat"]]],
+["als ob",[["Er tut so, als ob er alles wüsste.","als ob: Verb am Ende"],["Er tut so, als wäre er krank.","als: Verb an zweiter Stelle"],["Sie sieht aus, als hätte sie nicht geschlafen.","Vergangenheit: hätte + Partizip II"]]]
+];
+var vb=document.getElementById('vb');
+tabs(document.getElementById('vtabs'),vv.map(function(v){return v[0]}),function(i){fill(vb,vv[i][1],false);Array.prototype.forEach.call(vb.rows,function(r){r.cells[0].className='de'})});
+
+var cs=[
+["Satz 1","Wenn ich Zeit habe, komme ich.","Wenn ich Zeit hätte, käme ich. (oder: würde ich kommen)"],
+["Satz 2","Wenn er reich ist, kauft er ein Schloss.","Wenn er reich wäre, würde er ein Schloss kaufen."],
+["Satz 3","Wenn es regnet, bleibe ich zu Hause.","Wenn es regnete, bliebe ich zu Hause."],
+["Satz 4","Ich habe kein Auto, also fahre ich nicht.","Wenn ich ein Auto hätte, würde ich fahren."],
+["Satz 5","Er war krank. Er kam nicht.","Wenn er nicht krank gewesen wäre, wäre er gekommen."]
+];
+var cmp=document.getElementById('cmp');
+tabs(document.getElementById('ctabs'),cs.map(function(c){return c[0]}),function(i){
+ cmp.innerHTML='';
+ [["Real (Indikativ)",cs[i][1],""],["Irreal (Konjunktiv II)",cs[i][2],"p"]].forEach(function(x){
+  var d=el('div',x[2]);d.appendChild(el('small','',x[0]));d.appendChild(el('div','de',x[1]));cmp.appendChild(d);
+ });
+});
+
+var steps=[
+["Schritt 1: Ausgangssatz (real)","Ich habe kein Geld. Ich reise nicht.","Du siehst: Die Bedingung ist nicht erfüllt."],
+["Schritt 2: Bedingung im Konjunktiv II","Wenn ich Geld hätte, …","haben → hätte. Nach wenn steht das konjugierte Verb am Ende des Nebensatzes."],
+["Schritt 3: Folge im Konjunktiv II","… würde ich reisen.","würde + Infinitiv (bei starken Verben auch die eigene Form, z. B. gehen → ginge)."],
+["Schritt 4: Vergangenheit","Wenn ich Geld gehabt hätte, wäre ich gereist.","hätte oder wäre + Partizip II in beiden Teilen."]
+];
+var sd=document.getElementById('steps');
+steps.forEach(function(s){
+ var b=el('button','step');b.type='button';
+ b.appendChild(el('b','',s[0]));var x=el('div','de',s[1]);x.style.marginTop='4px';b.appendChild(x);b.appendChild(el('span','',s[2]));
+ b.addEventListener('click',function(){b.classList.toggle('open')});sd.appendChild(b);
+});
+
+function nz(s){return s.toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss').replace(/[.!?]/g,'').replace(/\s+/g,' ').trim()}
+var wi=[
+["Wenn ich Zeit ___, würde ich dir helfen. (haben)","hätte"],
+["Wenn er reich ___, würde er ein Haus kaufen. (sein)","wäre"],
+["Ich ___ gern ein Eis. (mögen, höflich)","möchte"],
+["___ Sie mir bitte helfen? (können, höflich)","Könnten"],
+["An deiner Stelle ___ ich mehr schlafen. (werden)","würde"],
+["Wenn ich du ___, würde ich das nicht tun. (sein)","wäre"],
+["Er tut so, als ob er alles ___. (wissen)","wüsste"],
+["Wenn wir Geld gehabt hätten, ___ wir gereist. (sein)","wären"],
+["Du ___ mehr Sport machen. (sollen, Ratschlag)","solltest"],
+["Wenn es morgen nicht regnen ___, würden wir wandern. (werden)","würde"],
+["Wenn ich das gewusst ___, hätte ich dir geholfen. (haben)","hätte"],
+["Wenn er früher gekommen ___, hätte er den Zug erreicht. (sein)","wäre"]
+];
+var wr=document.getElementById('wr');
+wi.forEach(function(w){
+ var box=el('div','q');box.appendChild(el('p','de',w[0]));
+ var row=el('div','opts');
+ var inp=el('input');inp.type='text';inp.setAttribute('aria-label','Antwort');inp.autocomplete='off';
+ inp.style.cssText='width:150px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surf);color:var(--ink);font:inherit';
+ var bt=el('button','opt','Prüfen');bt.type='button';
+ var fb=el('div','fb');fb.setAttribute('aria-live','polite');
+ function chk(){var ok=nz(inp.value)===nz(w[1]);inp.style.borderColor=ok?'var(--ok)':'var(--bad)';fb.textContent=ok?'Richtig!':'Noch nicht. Lösung: '+w[1]}
+ bt.addEventListener('click',chk);inp.addEventListener('keydown',function(e){if(e.key==='Enter')chk()});
+ row.appendChild(inp);row.appendChild(bt);box.appendChild(row);box.appendChild(fb);wr.appendChild(box);
+});
+
+var qs=[
+["Wofür benutzt man den Konjunktiv II vor allem?",["Reales","Irreales und Höfliches","nur Vergangenes"],1,"Wünsche, Irreales, höfliche Bitten, Ratschläge."],
+["Konjunktiv II von „sein“ (ich):",["war","wäre","wurde"],1,"sein → wäre."],
+["Konjunktiv II von „haben“ (er):",["hatte","hätte","habe"],1,"haben → hätte."],
+["Konjunktiv II von „kommen“ (er):",["kam","käme","kommte"],1,"kam + Umlaut + -e = käme."],
+["Warum sagt man meist „würde machen“?",["Die Form machte gleicht dem Präteritum","machen ist unregelmäßig","machen ist ein Modalverb"],0,"Schwache Verben haben dieselbe Form wie im Präteritum."],
+["Wenn ich Zeit ___, würde ich kommen.",["habe","hätte","hatte"],1,"Irreale Bedingung: hätte."],
+["Höflich: ___ Sie mir helfen?",["Können","Könnten","Konnten"],1,"Könnten ist höflicher."],
+["Wenn ich es gewusst ___, hätte ich dir geholfen.",["hätte","hatte","habe"],0,"Vergangenheit: hätte + Partizip II."],
+["Die Vergangenheit des Konjunktiv II bildet man mit:",["hätte oder wäre + Partizip II","würde + Partizip II","war + Partizip II"],0,"hätte oder wäre + Partizip II."],
+["Welcher Satz drückt einen Wunsch aus?",["Ich habe Zeit.","Wenn ich doch Zeit hätte!","Ich hatte Zeit."],1,"Wenn … doch … + Konjunktiv II."],
+["Konjunktiv II von „müssen“:",["müsste","musste","muss"],0,"müssen → müsste."],
+["Konjunktiv II von „mögen“ (ich):",["mochte","möchte","möge"],1,"mögen → möchte."],
+["An deiner Stelle ___ ich mehr schlafen.",["werde","würde","wurde"],1,"an deiner Stelle + würde."],
+["Welcher Satz ist richtig?",["Wenn ich würde Zeit haben, käme ich.","Wenn ich Zeit hätte, käme ich.","Wenn ich Zeit habte, käme ich."],1,"Nach wenn steht hätte, nicht würde."],
+["Er tut so, als ob er krank ___.",["ist","wäre","war"],1,"als ob + Konjunktiv II."],
+["Welcher Satz ist irreal?",["Wenn ich Zeit habe, komme ich.","Wenn ich Zeit hätte, käme ich.","Ich komme, weil ich Zeit habe."],1,"Konjunktiv II = irreal."],
+["Konjunktiv II von „fliegen“ (ich):",["flog","flöge","fliegte"],1,"Präteritumstamm flog + Umlaut + -e."],
+["Welcher Satz bezieht sich auf die Vergangenheit?",["Wenn ich reich wäre, würde ich reisen.","Wenn ich reich gewesen wäre, wäre ich gereist.","Wenn ich reich bin, reise ich."],1,"wäre + Partizip II in beiden Teilen."],
+["Bei welchem Verb ist der Konjunktiv II gleich dem Präteritum?",["wollen (wollte)","kommen (käme)","sein (wäre)"],0,"Bei wollen und sollen gibt es keinen Umlaut."],
+["Welche höfliche Bitte ist richtig?",["Würden Sie bitte das Fenster schließen?","Werden Sie bitte das Fenster schließen?","Wurden Sie bitte das Fenster schließen?"],0,"würde + Infinitiv."]
+];
+var qd=document.getElementById('quiz'),sc=document.getElementById('score'),pts=0,done=0;
+function build(){
+ qd.innerHTML='';pts=0;done=0;sc.textContent='Punkte: 0 / 0';
+ qs.forEach(function(q){
+  var box=el('div','q');box.appendChild(el('p','',q[0]));
+  var o=el('div','opts');box.appendChild(o);
+  var fb=el('div','fb');fb.setAttribute('aria-live','polite');box.appendChild(fb);
+  var answered=false;
+  q[1].forEach(function(t,i){
+   var b=el('button','opt',t);b.type='button';
+   b.addEventListener('click',function(){
+    if(answered)return;answered=true;done++;
+    var ok=i===q[2];if(ok)pts++;
+    b.classList.add(ok?'ok':'bad');
+    if(!ok)o.children[q[2]].classList.add('ok');
+    fb.textContent=(ok?'Richtig! ':'Leider falsch. ')+q[3];
+    sc.textContent='Punkte: '+pts+' / '+done;
+   });
+   o.appendChild(b);
+  });
+  qd.appendChild(box);
+ });
+}
+document.getElementById('reset').addEventListener('click',build);
+build();
+</script>
+</body>
+</html>
